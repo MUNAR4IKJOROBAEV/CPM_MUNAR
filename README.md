@@ -1,4 +1,4 @@
-# CPM_MUNAR
+# CPM_MUNAR_TOOL
 pkg update
 pkg upgrade -y
 pkg install git
