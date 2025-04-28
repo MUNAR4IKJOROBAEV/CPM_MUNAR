@@ -1,0 +1,105 @@
+import requests
+
+BASE_URL: str = "https://cpmsalebot.ru/api" 8157548474:AAEC-oyzISqpQcjATfUhDeINEz12-oherDE
+
+class MUNAR_TOOL:
+    def __init__(self, access_key: str) -> None:
+        self.auth_token = None
+        self.access_key = access_key
+
+    def _request(self, endpoint: str, extra_data: dict = None) -> dict:
+        data = {"account_auth": self.auth_token} if self.auth_token else {}
+        if extra_data:
+            data.update(extra_data)
+        params = {"key": self.access_key}
+        response = requests.post(f"{BASE_URL}/{endpoint}", params=params, data=data)
+        return response.json()
+
+    def login(self, email: str, password: str) -> int:
+        payload = {"account_email": email, "account_password": password}
+        params = {"key": self.access_key}
+        response = requests.post(f"{BASE_URL}/account_login", params=params, data=payload)
+        response_decoded = response.json()
+        if response_decoded.get("ok"):
+            self.auth_token = response_decoded.get("auth")
+        return response_decoded.get("error")
+
+    def register(self, email: str, password: str) -> int:
+        payload = {"account_email": email, "account_password": password}
+        params = {"key": self.access_key}
+        response = requests.post(f"{BASE_URL}/account_register", params=params, data=payload)
+        response_decoded = response.json()
+        return response_decoded.get("error")
+
+    def delete_account(self) -> None:
+        self._request("account_delete")
+
+    def get_player_data(self) -> dict:
+        return self._request("get_data")
+
+    def set_player_money(self, amount: int) -> bool:
+        response = self._request("set_money", {"amount": amount})
+        return response.get("ok", False)
+
+    def set_player_coins(self, amount: int) -> bool:
+        response = self._request("set_coins", {"amount": amount})
+        return response.get("ok", False)
+
+    def set_player_name(self, name: str) -> bool:
+        response = self._request("set_name", {"name": name})
+        return response.get("ok", False)
+
+    def set_player_localid(self, id: int) -> bool:
+        response = self._request("set_id", {"id": id})
+        return response.get("ok", False)
+
+    def set_player_plates(self) -> bool:
+        return self._request("set_plates").get("ok", False)
+
+    def get_player_car(self, car_id: int) -> dict:
+        return self._request("get_car", {"car_id": car_id})
+
+    def delete_player_friends(self) -> bool:
+        return self._request("delete_friends").get("ok", False)
+
+    def unlock_w16(self) -> bool:
+        return self._request("unlock_w16").get("ok", False)
+
+    def unlock_horns(self) -> bool:
+        return self._request("unlock_horns").get("ok", False)
+
+    def disable_engine_damage(self) -> bool:
+        return self._request("disable_damage").get("ok", False)
+
+    def unlimited_fuel(self) -> bool:
+        return self._request("unlimited_fuel").get("ok", False)
+
+    def set_player_wins(self, amount: int) -> bool:
+        response = self._request("set_race_wins", {"amount": amount})
+        return response.get("ok", False)
+
+    def set_player_loses(self, amount: int) -> bool:
+        response = self._request("set_race_loses", {"amount": amount})
+        return response.get("ok", False)
+
+    def unlock_houses(self) -> bool:
+        return self._request("unlock_houses").get("ok", False)
+
+    def unlock_smoke(self) -> bool:
+        return self._request("unlock_smoke").get("ok", False)
+
+    def unlock_paid_cars(self) -> bool:
+        return self._request("unlock_paid_cars").get("ok", False)
+
+    def unlock_all_cars(self) -> bool:
+        return self._request("unlock_all_cars").get("ok", False)
+
+    def unlock_all_cars_siren(self) -> bool:
+        return self._request("unlock_all_cars_siren").get("ok", False)
+
+    def account_clone(self, account_email: str, account_password: str) -> bool:
+        response = self._request("clone", {
+            "account_email": account_email,
+            "account_password": account_password
+        })
+        return response.get("ok",
