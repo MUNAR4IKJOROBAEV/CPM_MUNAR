@@ -1,2 +1,10 @@
 # CPM_MUNAR
-pkg update  pkg upgrade -y  pkg install git  pkg install python-pip  git clone https://github.com/MUNAR4IKJOROBAEV/CPM_MUNAR.git  cd CPM_MUNAR_TOOL  git pull  python3 -m pip install requests  pkg i python-numpy  pip install rich --upgrade  pip install -r requirements.txt  python main.py
+pkg update
+pkg upgrade -y
+pkg install git
+pkg install python -y
+git clone https://github.com/MUNAR09/MNR_TOOL.git
+cd MNR_TOOL
+git pull
+pip install -r requirements.txt
+python main.py
